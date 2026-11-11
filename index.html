@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>The Logic Matrix | Mohamed Salah</title>
+  <meta name="description" content="The Logic Matrix — بيئة عمل برمجية تفاعلية" />
+  <meta name="theme-color" content="#1a110a" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231a110a'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23f0a050'>◈</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="watermark">Mohamed Salah</div>
+  <div class="app-container">
+    <header class="app-header glass">
+      <div class="logo">
+        <div class="logo-mark">
+          <svg viewBox="0 0 48 48" width="38" height="38"><defs><linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="var(--amber)"/><stop offset="100%" stop-color="var(--green)"/></linearGradient></defs><rect x="2" y="2" width="44" height="44" rx="12" fill="var(--bg-espresso)" stroke="url(#logoGrad)" stroke-width="2"/><text x="24" y="33" text-anchor="middle" font-size="22" fill="url(#logoGrad)">◈</text></svg>
+        </div>
+        <div class="logo-text">
+          <h1>The Logic Matrix</h1>
+          <p class="subtitle">بيئة العمل البرمجية</p>
+        </div>
+      </div>
+      <nav class="main-nav" id="main-nav">
+        <button class="nav-btn active" data-panel="console"><span class="nav-icon">⌘</span><span class="nav-label">الكونسول</span></button>
+        <button class="nav-btn" data-panel="mindmap"><span class="nav-icon">◉</span><span class="nav-label">الخريطة</span></button>
+        <button class="nav-btn" data-panel="logic"><span class="nav-icon">⬡</span><span class="nav-label">المنطق</span></button>
+        <button class="nav-btn" data-panel="code"><span class="nav-icon">{ }</span><span class="nav-label">أكواد</span></button>
+        <button class="nav-btn" data-panel="prompts"><span class="nav-icon">✦</span><span class="nav-label">برومبت</span></button>
+        <button class="nav-btn" data-panel="python"><span class="nav-icon">🐍</span><span class="nav-label">بايثون</span></button>
+        <button class="nav-btn" data-panel="settings"><span class="nav-icon">⚙</span><span class="nav-label">إعدادات</span></button>
+      </nav>
+      <div class="header-actions">
+        <button id="theme-toggle" class="icon-btn" title="الوضع">◐</button>
+        <div class="header-status">
+          <span class="status-dot" id="status-dot"></span>
+          <span id="system-status">SYSTEM LOCKED</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content" id="main-content">
+      <section id="panel-console" class="panel active">
+        <div class="console-wrapper glass">
+          <div class="console-header">
+            <div class="console-controls"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+            <span class="console-title">LOGIC_MATRIX_TERMINAL v3.0</span>
+            <span class="console-badge" id="console-badge">ENCRYPTED</span>
+          </div>
+          <div id="terminal-output" class="terminal-output"></div>
+          <div class="terminal-input-line">
+            <span class="prompt">root@matrix:~$</span>
+            <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" placeholder="اكتب الأمر أو كلمة المرور..." />
+          </div>
+        </div>
+        <div class="console-sidebar glass">
+          <h3>الحالة</h3>
+          <div class="status-card">
+            <div class="status-item"><span class="label">المستوى</span><span class="value" id="current-level">1 / 3</span></div>
+            <div class="status-item"><span class="label">المحلول</span><span class="value" id="solved-count">0</span></div>
+            <div class="status-item"><span class="label">الوصول</span><span class="value locked" id="access-status">مقفل</span></div>
+          </div>
+          <div class="hint-box"><h4>تلميح</h4><p id="current-hint">استخدم الخريطة الذهنية ثم مختبر المنطق.</p></div>
+          <div class="story-progress">
+            <div class="progress-bar"><div class="progress-fill" id="story-progress" style="width:15%"></div></div>
+            <span class="progress-text">تقدم القصة</span>
+          </div>
+          <p class="save-indicator" id="save-indicator">● محفوظ تلقائيًا</p>
+        </div>
+      </section>
+
+      <section id="panel-mindmap" class="panel">
+        <div class="mindmap-container">
+          <div class="notes-editor glass">
+            <div class="editor-header">
+              <h3>محرر الملاحظات</h3>
+              <div class="editor-actions">
+                <button id="clear-notes" class="btn-sm">مسح</button>
+                <button id="load-sample" class="btn-sm accent">عينة</button>
+              </div>
+            </div>
+            <textarea id="notes-input" placeholder="• اكتب نقاط...&#10;• المسافات للتفرع&#10;• الخريطة تتحدث تلقائيًا"></textarea>
+            <div class="editor-footer">
+              <span id="node-count">0 عقدة</span><span class="separator">|</span><span id="notes-save-status">يُحفظ تلقائيًا</span>
+            </div>
+          </div>
+          <div class="mindmap-canvas-wrapper glass">
+            <div class="canvas-toolbar">
+              <button id="center-map" class="btn-sm">توسيط</button>
+              <button id="reset-positions" class="btn-sm">إعادة ترتيب</button>
+              <span class="zoom-controls">
+                <button id="zoom-out" class="btn-icon">−</button>
+                <span id="zoom-level">100%</span>
+                <button id="zoom-in" class="btn-icon">+</button>
+              </span>
+            </div>
+            <div id="mindmap-canvas" class="mindmap-canvas"><svg id="mindmap-svg" xmlns="http://www.w3.org/2000/svg"></svg></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="panel-logic" class="panel">
+        <div class="logic-container">
+          <div class="blocks-palette glass">
+            <h3>بلوكات المنطق</h3>
+            <p class="palette-hint">اضغط أو اسحب للإضافة</p>
+            <div class="block-category"><h4>شروط</h4>
+              <div class="block" data-type="if-starts"><span class="block-icon">◈</span><span>إذا بدأ بـ</span><input class="block-input" placeholder="قيمة" /></div>
+              <div class="block" data-type="if-contains"><span class="block-icon">◈</span><span>إذا احتوى</span><input class="block-input" placeholder="قيمة" /></div>
+              <div class="block" data-type="if-length"><span class="block-icon">◈</span><span>الطول</span>
+                <select class="block-select"><option value=">">></option><option value="<"><</option><option value="==">=</option></select>
+                <input class="block-input short" type="number" placeholder="5" />
+              </div>
+            </div>
+            <div class="block-category"><h4>عمليات</h4>
+              <div class="block" data-type="extract"><span class="block-icon">⬡</span><span>استخرج الأرقام</span></div>
+              <div class="block" data-type="reverse"><span class="block-icon">⬡</span><span>اعكس النص</span></div>
+              <div class="block" data-type="uppercase"><span class="block-icon">⬡</span><span>Uppercase</span></div>
+              <div class="block" data-type="replace"><span class="block-icon">⬡</span><span>استبدل</span><input class="block-input short" placeholder="من" /><span>بـ</span><input class="block-input short" placeholder="إلى" /></div>
+            </div>
+            <div class="block-category"><h4>تكرار</h4>
+              <div class="block" data-type="repeat"><span class="block-icon">↻</span><span>كرر</span><input class="block-input short" type="number" value="2" min="1" max="10" /><span>مرات</span></div>
+            </div>
+          </div>
+          <div class="logic-workspace">
+            <div class="workspace-area glass">
+              <div class="workspace-header"><h3>مساحة العمل</h3><button id="clear-workspace" class="btn-sm">مسح</button></div>
+              <div id="drop-zone" class="drop-zone"><div class="drop-placeholder">اضغط على بلوك أو اسحبه هنا</div></div>
+            </div>
+            <div class="output-area">
+              <div class="code-output glass">
+                <div class="output-header"><h3>الكود</h3><button id="copy-code" class="btn-sm">نسخ</button></div>
+                <pre id="generated-code"><code>// أضف بلوكات...</code></pre>
+              </div>
+              <div class="flowchart-output glass">
+                <div class="output-header"><h3>المخطط</h3></div>
+                <div id="flowchart" class="flowchart"><div class="flow-empty">—</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="panel-code" class="panel">
+        <div class="code-lab-container">
+          <div class="code-sidebar glass"><h3>مكتبة الأكواد</h3><div class="snippet-list" id="snippet-list"></div></div>
+          <div class="code-main">
+            <div class="code-editor-wrap glass">
+              <div class="editor-header">
+                <h3 id="snippet-title">محرر الأكواد</h3>
+                <div class="editor-actions">
+                  <select id="code-lang" class="lang-select"><option value="javascript">JavaScript</option><option value="python">Python</option><option value="html">HTML</option><option value="css">CSS</option></select>
+                  <button id="copy-snippet" class="btn-sm">نسخ</button>
+                  <button id="run-snippet" class="btn-sm accent">تشغيل</button>
+                </div>
+              </div>
+              <textarea id="code-editor" class="code-editor" spellcheck="false" placeholder="// اختر snippet أو اكتب كودك..."></textarea>
+            </div>
+            <div class="code-output-panel glass">
+              <div class="output-header"><h3>النتيجة</h3><button id="clear-code-output" class="btn-sm">مسح</button></div>
+              <pre id="code-result" class="code-result">جاهز للتشغيل...</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="panel-prompts" class="panel">
+        <div class="prompts-container">
+          <div class="prompts-sidebar glass"><h3>قوالب البرومبت</h3><div id="prompt-categories"></div></div>
+          <div class="prompts-main">
+            <div class="prompt-editor glass">
+              <div class="editor-header">
+                <h3 id="prompt-title">مختبر البرومبت</h3>
+                <div class="editor-actions">
+                  <button id="copy-prompt" class="btn-sm">نسخ</button>
+                  <button id="clear-prompt" class="btn-sm">مسح</button>
+                </div>
+              </div>
+              <textarea id="prompt-editor" class="prompt-editor-area" placeholder="حمّل قالب أو اكتب برومبت..."></textarea>
+              <div class="prompt-vars">
+                <label>متغيرات:</label>
+                <input type="text" id="var-topic" placeholder="الموضوع" class="var-input" />
+                <input type="text" id="var-level" placeholder="المستوى" class="var-input" />
+                <input type="text" id="var-lang" placeholder="اللغة" class="var-input" />
+                <button id="apply-vars" class="btn-sm accent">تطبيق</button>
+              </div>
+            </div>
+            <div class="prompt-tips glass">
+              <h3>نصائح برومبت قوي</h3>
+              <ul>
+                <li>حدد <strong>الدور</strong> بوضوح</li>
+                <li>اذكر <strong>المخرج المطلوب</strong></li>
+                <li>حدد الأسلوب والطول</li>
+                <li>أضف أمثلة إن أمكن</li>
+                <li>ضع قيود واضحة</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="panel-python" class="panel">
+        <div class="python-container">
+          <div class="python-sidebar glass"><h3>أوامر سريعة</h3><div class="py-commands" id="py-commands"></div></div>
+          <div class="python-main">
+            <div class="python-repl glass">
+              <div class="console-header">
+                <div class="console-controls"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                <span class="console-title">PYTHON ENGINE v3</span>
+                <span class="console-badge" style="background:var(--green-soft);color:var(--green);border-color:var(--green)">PYTHON</span>
+              </div>
+              <div id="py-output" class="terminal-output py-output"></div>
+              <div class="terminal-input-line">
+                <span class="prompt" style="color:var(--amber)">>>> </span>
+                <input type="text" id="py-input" autocomplete="off" spellcheck="false" placeholder="اكتب كود بايثون..." />
+              </div>
+            </div>
+            <div class="python-cheatsheet glass">
+              <div class="editor-header"><h3>مرجع سريع</h3></div>
+              <div class="cheatsheet-content">
+                <div class="cheat-section"><h4>أنواع</h4><code>int float str list dict tuple set bool</code></div>
+                <div class="cheat-section"><h4>حلقات</h4><code>for x in range(n):</code><br><code>while cond:</code></div>
+                <div class="cheat-section"><h4>دوال</h4><code>def name(a,b):</code><br><code>lambda x: x*2</code></div>
+                <div class="cheat-section"><h4>قوائم</h4><code>append | len | sum | sorted</code></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="panel-settings" class="panel">
+        <div class="settings-container">
+          <div class="settings-card glass">
+            <h2>⚙ الإعدادات</h2>
+            <p class="settings-desc">كل التغييرات تُحفظ تلقائيًا</p>
+            <div class="settings-group">
+              <h3>المظهر</h3>
+              <div class="setting-row">
+                <label>الوضع</label>
+                <div class="toggle-group">
+                  <button class="toggle-btn" data-theme-set="dark">داكن</button>
+                  <button class="toggle-btn" data-theme-set="light">فاتح</button>
+                </div>
+              </div>
+              <div class="setting-row">
+                <label>حجم الخط</label>
+                <div class="toggle-group">
+                  <button class="toggle-btn" data-fontsize="14">صغير</button>
+                  <button class="toggle-btn active" data-fontsize="16">متوسط</button>
+                  <button class="toggle-btn" data-fontsize="18">كبير</button>
+                </div>
+              </div>
+              <div class="setting-row">
+                <label>أنيميشن التنقل</label>
+                <label class="switch"><input type="checkbox" id="setting-animations" checked /><span class="slider"></span></label>
+              </div>
+              <div class="setting-row">
+                <label>العلامة المائية</label>
+                <label class="switch"><input type="checkbox" id="setting-watermark" checked /><span class="slider"></span></label>
+              </div>
+            </div>
+            <div class="settings-group">
+              <h3>السلوك</h3>
+              <div class="setting-row">
+                <label>الحفظ التلقائي</label>
+                <label class="switch"><input type="checkbox" id="setting-autosave" checked /><span class="slider"></span></label>
+              </div>
+            </div>
+            <div class="settings-group">
+              <h3>البيانات</h3>
+              <div class="setting-row"><label>آخر حفظ</label><span id="last-save-time" class="muted">—</span></div>
+              <div class="setting-actions">
+                <button id="export-data" class="btn-sm accent">تصدير</button>
+                <button id="import-data" class="btn-sm">استيراد</button>
+                <button id="reset-all" class="btn-sm danger">إعادة ضبط</button>
+              </div>
+              <input type="file" id="import-file" accept=".json" hidden />
+            </div>
+            <div class="settings-group">
+              <h3>عن التطبيق</h3>
+              <p class="about-text"><strong>The Logic Matrix v3.0</strong><br>بيئة عمل برمجية تفاعلية<br>صُمم بواسطة <strong>Mohamed Salah</strong><br>يعمل بدون إنترنت بعد التحميل</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div id="toast" class="toast"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
